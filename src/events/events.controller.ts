@@ -1,9 +1,9 @@
 import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
 import { CreateEventDto } from "./create-event-dto";
 import { UpdateEventDto } from "./update-event.dto";
 import { Event } from "./event.entity";
 import { Repository } from "typeorm";
-import { InjectRepository } from "@nestjs/typeorm";
 
 @Controller('/events')
 export class EventsController {
