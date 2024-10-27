@@ -15,11 +15,12 @@ import ormConfigProd from './config/orm.config.prod';
       expandVariables: true,
     }),
     TypeOrmModule.forRootAsync({
-    useFactory: process.env.NODE_ENV !== 'production' ? ormConfig : ormConfigProd
+      useFactory:
+        process.env.NODE_ENV !== 'production' ? ormConfig : ormConfigProd,
     }),
-    EventsModule
+    EventsModule,
   ],
-  
+
   controllers: [AppController],
   providers: [AppService],
 })

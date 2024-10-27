@@ -1,10 +1,10 @@
-import { registerAs } from "@nestjs/config";
-import { TypeOrmModuleOptions } from "@nestjs/typeorm";
-import { Event } from "src/events/event.entity";
+import { registerAs } from '@nestjs/config';
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { Event } from 'src/events/event.entity';
 
 export default registerAs(
-    'orm.config',
-    (): TypeOrmModuleOptions => ({
+  'orm.config',
+  (): TypeOrmModuleOptions => ({
     type: 'postgres',
     host: process.env.DB_HOST,
     port: Number(process.env.DB_PORT),
@@ -14,4 +14,5 @@ export default registerAs(
     autoLoadEntities: true,
     entities: [Event],
     synchronize: false,
-}))
+  }),
+);

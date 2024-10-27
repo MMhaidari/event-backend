@@ -1,19 +1,27 @@
-import { Body, Controller, Delete, Get, Logger, NotFoundException, Param, Patch, Post } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { CreateEventDto } from "./create-event-dto";
-import { UpdateEventDto } from "./update-event.dto";
-import { Event } from "./event.entity";
-import { Repository } from "typeorm";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Logger,
+  NotFoundException,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { CreateEventDto } from './create-event-dto';
+import { UpdateEventDto } from './update-event.dto';
+import { Event } from './event.entity';
+import { Repository } from 'typeorm';
 
 @Controller('/events')
 export class EventsController {
   private readonly logger = new Logger(EventsController.name);
   constructor(
     @InjectRepository(Event)
-    private readonly repository: Repository<Event>
-  ) {
-
-  }
+    private readonly repository: Repository<Event>,
+  ) {}
 
   @Get()
   async findAll(): Promise<Event[]> {
@@ -26,7 +34,7 @@ export class EventsController {
   @Get(':id')
   async findOne(@Param('id') id: number): Promise<Event> {
     const event = await this.repository.findOne({ where: { id } });
-    if (!event){
+    if (!event) {
       throw new NotFoundException('Event not found');
     }
     return event;
@@ -43,10 +51,10 @@ export class EventsController {
   @Patch(':id')
   async update(@Param('id') id, @Body() input: UpdateEventDto): Promise<Event> {
     const event = await this.repository.findOne({ where: { id } });
-    if (!event){
+    if (!event) {
       throw new NotFoundException('Event not found');
     }
-     return await this.repository.save({
+    return await this.repository.save({
       ...event,
       ...input,
     });
@@ -55,10 +63,9 @@ export class EventsController {
   @Delete(':id')
   async remove(@Param('id') id): Promise<void> {
     const index = await this.repository.findOne({ where: { id } });
-    if (!index){
+    if (!index) {
       throw new NotFoundException('Event not found');
     }
     await this.repository.remove(index);
-    
   }
 }
